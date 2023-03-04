@@ -1,8 +1,4 @@
 ## RETE FAGIOLI MARKET
 
-Buongiorno
+The backend is made with Spring Boot and Postgresql.
 
-Running the backend:
-```bash
-    sh ./start.sh
-```
