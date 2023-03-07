@@ -1,6 +1,9 @@
 CREATE DATABASE "retefagioli-market";
 
+\c retefagioli-market
+
 CREATE TABLE Utenti(
     id INT PRIMARY KEY,
-    name TEXT NOT NULL
+    nome TEXT NOT NULL,
+    cognome TEXT NOT NULL
 );
