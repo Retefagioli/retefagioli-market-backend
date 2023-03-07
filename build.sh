@@ -26,7 +26,7 @@ fi
 
 docker compose up --force-recreate --build -d
 
-echo "[+] Application running on http://application-market:8080/ ..."
+echo "[+] Application running on http://localhost:8080/ ..."
 echo "[+] Deleting previous docker images..."
 
 docker image prune -f
