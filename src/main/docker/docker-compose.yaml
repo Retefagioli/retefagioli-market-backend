@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  application:
+    image: 'retefagioli-market-spring:latest'
+    build:
+      context: .
+    container_name: application-market
+    depends_on:
+      - database
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database-market:5432/retefagioli-market
+      - SPRING_DATASOURCE_USERNAME=exsuslabs
+      - SPRING_DATASOURCE_PASSWORD=exsuslabs
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  database:
+    image: 'retefagioli-market-database:latest'
+    build:
+      context: postgres/.
+    container_name: database-market
+    environment:
+      - POSTGRES_USER=exsuslabs
+      - POSTGRES_PASSWORD=exsuslabs
+    expose:
+      - "5432"
