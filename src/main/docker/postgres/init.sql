@@ -2,8 +2,14 @@ CREATE DATABASE "retefagioli-market";
 
 \c retefagioli-market
 
-CREATE TABLE Utenti(
-    id INT PRIMARY KEY,
-    nome TEXT NOT NULL,
-    cognome TEXT NOT NULL
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+CREATE TABLE "user" (
+    id uuid PRIMARY KEY,
+    name VARCHAR NOT NULL,
+    surname VARCHAR NOT NULL,
+    dob DATE,
+    email VARCHAR NOT NULL,
+    phone VARCHAR,
+    address VARCHAR
 );
