@@ -18,8 +18,8 @@ public class UserServiceImpl implements UserService {
     UserRepository _userRepository;
 
     public Optional<String> createUser(UserFullInfoRequest userFullInfoRequest) {
+        if (_userRepository.existsById(userFullInfoRequest.getId())) return Optional.of("user already exist");
         UserModel user = new UserModel();
-        System.out.println(userFullInfoRequest.getId());
         user.setId(userFullInfoRequest.getId());
         user.setName(userFullInfoRequest.getName());
         user.setSurname(userFullInfoRequest.getSurname());
@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
         try {
             _userRepository.save(user);
         } catch (DataAccessException e) {
-            return Optional.of(e.getMessage());
+            return Optional.of(e.getRootCause().getLocalizedMessage());
         }
         return Optional.empty();
     }
@@ -41,12 +41,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<String> getUser(UUID id) {
-        return Optional.empty();
+    public Optional<UserModel> getUser(UUID id) {
+        if (!_userRepository.existsById(id)) return Optional.empty();
+        try {
+            return _userRepository.findById(id);
+        } catch (DataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     @Override
     public Optional<String> deleteUser(UUID id) {
+        if (!_userRepository.existsById(id)) return Optional.of("user does not exist");
+        try {
+            _userRepository.deleteById(id);
+        } catch (DataAccessException e) {
+            return Optional.of(e.getRootCause().getLocalizedMessage());
+        }
         return Optional.empty();
     }
 }
