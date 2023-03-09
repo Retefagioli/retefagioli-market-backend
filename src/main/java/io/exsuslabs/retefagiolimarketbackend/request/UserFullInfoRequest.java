@@ -11,7 +11,7 @@ import java.util.UUID;
 @Setter
 @Getter
 @NoArgsConstructor
-public class UserInfoRequest {
+public class UserFullInfoRequest {
     UUID id;
     String name;
     String surname;

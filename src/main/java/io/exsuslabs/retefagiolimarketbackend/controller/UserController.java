@@ -1,6 +1,6 @@
 package io.exsuslabs.retefagiolimarketbackend.controller;
 
-import io.exsuslabs.retefagiolimarketbackend.request.UserInfoRequest;
+import io.exsuslabs.retefagiolimarketbackend.request.UserFullInfoRequest;
 import io.exsuslabs.retefagiolimarketbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,10 +25,10 @@ public class UserController {
             consumes = "application/json",
             produces = "application/json"
     )
-    public ResponseEntity<Object> createUser(@Validated @RequestBody UserInfoRequest userInfoRequest, BindingResult bindingResult) {
+    public ResponseEntity<Object> createUser(@Validated @RequestBody UserFullInfoRequest userFullInfoRequest, BindingResult bindingResult) {
         Optional<String> error;
 
-        error = _userService.createUser(userInfoRequest);
+        error = _userService.createUser(userFullInfoRequest);
 
         if (error.isPresent()) {
             return new ResponseEntity<>(error.get(),HttpStatus.BAD_REQUEST);

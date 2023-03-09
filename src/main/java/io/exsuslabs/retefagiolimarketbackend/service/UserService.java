@@ -2,12 +2,11 @@ package io.exsuslabs.retefagiolimarketbackend.service;
 
 import io.exsuslabs.retefagiolimarketbackend.model.UserModel;
 import io.exsuslabs.retefagiolimarketbackend.repository.UserRepository;
-import io.exsuslabs.retefagiolimarketbackend.request.UserInfoRequest;
+import io.exsuslabs.retefagiolimarketbackend.request.UserFullInfoRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -16,16 +15,16 @@ public class UserService {
     @Autowired
     UserRepository _userRepository;
 
-    public Optional<String> createUser(UserInfoRequest userInfoRequest) {
+    public Optional<String> createUser(UserFullInfoRequest userFullInfoRequest) {
         UserModel user = new UserModel();
-        System.out.println(userInfoRequest.getId());
-        user.setId(userInfoRequest.getId());
-        user.setName(userInfoRequest.getName());
-        user.setSurname(userInfoRequest.getSurname());
-        user.setEmail(userInfoRequest.getEmail());
-        user.setDob(userInfoRequest.getDob());
-        user.setPhone(userInfoRequest.getPhone());
-        user.setAddress(userInfoRequest.getAddress());
+        System.out.println(userFullInfoRequest.getId());
+        user.setId(userFullInfoRequest.getId());
+        user.setName(userFullInfoRequest.getName());
+        user.setSurname(userFullInfoRequest.getSurname());
+        user.setEmail(userFullInfoRequest.getEmail());
+        user.setDob(userFullInfoRequest.getDob());
+        user.setPhone(userFullInfoRequest.getPhone());
+        user.setAddress(userFullInfoRequest.getAddress());
         try {
             _userRepository.save(user);
         } catch (DataAccessException e) {
