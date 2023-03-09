@@ -6,27 +6,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-import java.util.UUID;
-
 @Entity
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "User", schema = "public")
-public class UserModel {
+public class SupplierModel {
 
     @Id
-    UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
 
+    String description;
     @Nonnull
-    String name;
+    String IVA;
     @Nonnull
-    String surname;
-    Date dob;
-    @Nonnull
-    String email;
-    String phone;
+    String companyOffice;
+
     String address;
+
+    // TUTTI GLI ATTRIBUTI CHE SI VOGLIONO AGGIUNGERE ...
 
 }
