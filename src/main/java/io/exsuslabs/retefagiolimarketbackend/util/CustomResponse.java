@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CustomResponse {
-    private Map<String, Object> result = new HashMap<>();
+    private Map<Object, Object> result = new HashMap<>();
     private HttpStatus status;
 
     public static CustomResponse create() {
@@ -30,7 +30,12 @@ public class CustomResponse {
         return this;
     }
 
-    public ResponseEntity<Map<String, Object>> build() {
+    public CustomResponse addModel(Object model) {
+        result.put("user", model);
+        return this;
+    }
+
+    public ResponseEntity<Map<Object, Object>> build() {
         return new ResponseEntity<>(result, status);
     }
 
