@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import io.exsuslabs.retefagiolimarketbackend.model.UserModel;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -20,6 +21,27 @@ public class UserController {
 
     @Autowired
     UserService _userService;
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getUser(@PathVariable UUID id) {
+        Optional<UserModel> user;
+
+        user = _userService.getUser(id);
+
+        if (user.isEmpty()) {
+            return CustomResponse
+                    .create()
+                    .message("bruh")
+                    .status(HttpStatus.NOT_FOUND)
+                    .build();
+        }
+
+        return CustomResponse
+                .create()
+                .addModel(user.get())
+                .status(HttpStatus.FOUND)
+                .build();
+    }
 
     @PostMapping(
             consumes = "application/json",
@@ -78,6 +100,34 @@ public class UserController {
         return CustomResponse
                 .create()
                 .message("user deleted successfully")
+                .status(HttpStatus.OK)
+                .build();
+    }
+
+    @PutMapping
+    public ResponseEntity<?> updateUser(@Validated @RequestBody UserFullInfoRequest userFullInfoRequest, BindingResult bindingResult) {
+        Optional<String> error;
+
+        if (bindingResult.hasErrors()) {
+            return CustomResponse
+                    .create()
+                    .error_message(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage())
+                    .status(HttpStatus.BAD_REQUEST)
+                    .build();
+        }
+
+        error = _userService.updateUser(userFullInfoRequest);
+
+        if (error.isPresent()) {
+            return CustomResponse
+                    .create()
+                    .error_message(error.get())
+                    .status(HttpStatus.BAD_REQUEST)
+                    .build();
+        }
+            return CustomResponse
+                .create()
+                .message("user information updated successfully")
                 .status(HttpStatus.OK)
                 .build();
     }
