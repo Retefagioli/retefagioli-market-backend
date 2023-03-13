@@ -19,12 +19,12 @@ public class UserModel {
     @Id
     UUID id;
 
-    @Nonnull
+    @Column(nullable = false)
     String name;
-    @Nonnull
+    @Column(nullable = false)
     String surname;
     Date dob;
-    @Nonnull
+    @Column(nullable = false)
     String email;
     String phone;
     String address;
