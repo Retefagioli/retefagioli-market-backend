@@ -8,12 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/user")
@@ -29,6 +28,14 @@ public class UserController {
     public ResponseEntity<?> createUser(@Validated @RequestBody UserFullInfoRequest userFullInfoRequest, BindingResult bindingResult) {
         Optional<String> error;
 
+        if (bindingResult.hasErrors()) {
+            return CustomResponse
+                    .create()
+                    .error_message(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage())
+                    .status(HttpStatus.BAD_REQUEST)
+                    .build();
+        }
+
         error = _userService.createUser(userFullInfoRequest);
 
         if (error.isPresent()) {
@@ -43,6 +50,35 @@ public class UserController {
                 .create()
                 .message("User created successfully")
                 .status(HttpStatus.CREATED)
+                .build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable UUID id) {
+        Optional<String> error;
+
+        if (Objects.isNull(id)) {
+            return CustomResponse
+                    .create()
+                    .error_message("id is not a valid uuid")
+                    .status(HttpStatus.BAD_REQUEST)
+                    .build();
+        }
+
+        error = _userService.deleteUser(id);
+
+        if (error.isPresent()) {
+            return CustomResponse
+                    .create()
+                    .error_message(error.get())
+                    .status(HttpStatus.NOT_FOUND)
+                    .build();
+        }
+
+        return CustomResponse
+                .create()
+                .message("user deleted successfully")
+                .status(HttpStatus.OK)
                 .build();
     }
 }
