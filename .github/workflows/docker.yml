@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        run: actions/checkout@v3
+        uses: actions/checkout@v3
+        with:
+          path: main
       - name: Initialize the application
         run: sh ./run.sh
