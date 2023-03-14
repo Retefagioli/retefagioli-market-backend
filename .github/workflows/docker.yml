@@ -21,6 +21,8 @@ jobs:
       - name: Run the application
         run: sh ./run.sh &
       - name: Install to Postman CLI
+        run: curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+      - name: Login to Postman
         run: postman login --with-api-key ${{ secrets.API_KEY_POSTMAN }}
       - name: Download Collections and Schemas from Repository
         run: git clone https://github.com/Exsus-Labs/retefagioli-market-api.git
