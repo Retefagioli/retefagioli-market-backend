@@ -1,4 +1,4 @@
-name: Initialize Application
+name: Deploy and Test
 on:
   push:
     branches:
@@ -20,3 +20,9 @@ jobs:
           distribution: 'temurin'
       - name: Run the application
         run: sh ./run.sh &
+      - name: Install to Postman CLI
+        run: postman login --with-api-key ${{ secrets.API_KEY_POSTMAN }}
+      - name: Download Collections and Schemas from Repository
+        run: git clone https://github.com/Exsus-Labs/retefagioli-market-api.git
+      - name: Run API tests
+        run: postman collection run "${{ github.workspace }}/postman/collections/User Management.json" --integration-id "135861-${{ github.run_id }}"
