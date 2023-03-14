@@ -8,7 +8,7 @@ on:
     branches:
       - "main"
 jobs:
-  docker:
+  Testing:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -26,7 +26,5 @@ jobs:
         run: git clone https://github.com/Exsus-Labs/retefagioli-market-api.git
       - name: Run the application
         run: sh ./run.sh
-      - name: Checking stuff
-        run: curl -X POST http://127.0.0.1:8080/user
       - name: Run API tests
         run: postman collection run "${{ github.workspace }}/retefagioli-market-api/postman/collections/User Management.json" --integration-id "135861-${{ github.run_id }}"
