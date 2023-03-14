@@ -27,4 +27,4 @@ jobs:
       - name: Download Collections and Schemas from Repository
         run: git clone https://github.com/Exsus-Labs/retefagioli-market-api.git
       - name: Run API tests
-        run: postman collection run "${{ github.workspace }}/postman/collections/User Management.json" --integration-id "135861-${{ github.run_id }}"
+        run: postman collection run "${{ github.workspace }}/retefagioli-market-api/postman/collections/User Management.json" --integration-id "135861-${{ github.run_id }}"
