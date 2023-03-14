@@ -13,7 +13,5 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          path: main
       - name: Initialize the application
         run: sh ./run.sh
