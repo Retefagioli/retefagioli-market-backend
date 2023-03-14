@@ -18,13 +18,13 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Run the application
-        run: sh ./run.sh &
       - name: Install to Postman CLI
         run: curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
       - name: Login to Postman
         run: postman login --with-api-key ${{ secrets.API_KEY_POSTMAN }}
       - name: Download Collections and Schemas from Repository
         run: git clone https://github.com/Exsus-Labs/retefagioli-market-api.git
+      - name: Run the application
+        run: sh ./run.sh &
       - name: Run API tests
         run: postman collection run "${{ github.workspace }}/retefagioli-market-api/postman/collections/User Management.json" --integration-id "135861-${{ github.run_id }}"
