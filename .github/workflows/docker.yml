@@ -8,7 +8,7 @@ on:
     branches:
       - "main"
 jobs:
-  docker:
+  Testing:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,6 +25,14 @@ jobs:
       - name: Download Collections and Schemas from Repository
         run: git clone https://github.com/Exsus-Labs/retefagioli-market-api.git
       - name: Run the application
-        run: sh ./run.sh &
+        run: sh ./run.sh
+      - name: Get Docker informations
+        run: |
+          docker compose ps --all
+          docker compose ps --filter=running
+          docker compose logs
+      - name: Testing the API with CURL
+        run: |
+              curl --location 'http://localhost:8080/user' \ --header 'Content-Type: application/json' \ --data-raw '{"id": "a5e49995-86d3-4a45-bfe7-67ac642e473e","name": "Kara Osinski","surname": "I","dob": "2023-03-15T13:56:11.412Z","email": "Nikita.Hoeger71@yahoo.com","phone": "554-980-2259","address": "8599 Lulu Knolls"}'
       - name: Run API tests
         run: postman collection run "${{ github.workspace }}/retefagioli-market-api/postman/collections/User Management.json" --integration-id "135861-${{ github.run_id }}"
