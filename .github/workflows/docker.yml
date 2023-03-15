@@ -29,6 +29,6 @@ jobs:
         
       - name: Testing the API with CURL
         run: |
-              curl -H "Content-Type: application/json" -X POST -d {"id": "5de03e58-f8f5-423e-98c0-9c1ed0e15cf6", "name": "Tadeas", "surname": "Lowis", "email": "tlowis0@theguardian.com"} http://localhost:8080/user
+              curl -H "Content-Type: application/json" \ -X POST \-d {"id": "5de03e58-f8f5-423e-98c0-9c1ed0e15cf6", "name": "Tadeas", "surname": "Lowis", "email": "tlowis0@theguardian.com"} \ http://localhost:8080/user
       - name: Run API tests
         run: postman collection run "${{ github.workspace }}/retefagioli-market-api/postman/collections/User Management.json" --integration-id "135861-${{ github.run_id }}"
