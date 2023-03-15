@@ -26,4 +26,4 @@ docker image prune -f
 docker compose up --detach
 echo "[+] Application running on http://localhost:8080/ ..."
 docker compose ps --all
-
+docker port test 60000
