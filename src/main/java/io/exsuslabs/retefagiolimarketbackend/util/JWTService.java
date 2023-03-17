@@ -7,10 +7,8 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import io.exsuslabs.retefagiolimarketbackend.model.UserModel;
-import org.hibernate.query.sqm.TemporalUnit;
 
 import java.time.Instant;
-import java.time.temporal.TemporalAmount;
 import java.util.Optional;
 
 public class JWTService {

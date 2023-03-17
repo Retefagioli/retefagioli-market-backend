@@ -5,7 +5,6 @@ import io.exsuslabs.retefagiolimarketbackend.repository.UserRepository;
 import io.exsuslabs.retefagiolimarketbackend.request.UserFullInfoRequest;
 import io.exsuslabs.retefagiolimarketbackend.service.UserService;
 import io.exsuslabs.retefagiolimarketbackend.util.RequestConverter;
-import org.apache.coyote.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
