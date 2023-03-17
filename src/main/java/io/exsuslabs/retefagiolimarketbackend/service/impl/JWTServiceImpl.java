@@ -1,4 +1,4 @@
-package io.exsuslabs.retefagiolimarketbackend.util;
+package io.exsuslabs.retefagiolimarketbackend.service.impl;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -7,15 +7,16 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import io.exsuslabs.retefagiolimarketbackend.model.UserModel;
+import io.exsuslabs.retefagiolimarketbackend.service.JWTService;
 
 import java.time.Instant;
 import java.util.Optional;
 
-public class JWTService {
+public class JWTServiceImpl implements JWTService {
     private static final String SECRET_KEY = "";
     private static final String ISSUER = "EXSUS-LABS-001";
     private static final Algorithm ALGO = Algorithm.HMAC256(SECRET_KEY);
-    public static Optional<String> createJWT(UserModel userModel) {
+    public Optional<String> createJWT(UserModel userModel) {
         try {
             return Optional.of(JWT
                     .create()
@@ -32,7 +33,7 @@ public class JWTService {
         }
     }
 
-    public static Optional<DecodedJWT> verifyJWT(String token) {
+    public Optional<DecodedJWT> verifyJWT(String token) {
         try {
             JWTVerifier verifier = JWT.require(ALGO)
                     .withIssuer(ISSUER)

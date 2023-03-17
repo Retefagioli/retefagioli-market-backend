@@ -1,6 +1,7 @@
 package io.exsuslabs.retefagiolimarketbackend.controller;
 
 import io.exsuslabs.retefagiolimarketbackend.request.UserFullInfoRequest;
+import io.exsuslabs.retefagiolimarketbackend.service.JWTService;
 import io.exsuslabs.retefagiolimarketbackend.service.UserService;
 import io.exsuslabs.retefagiolimarketbackend.util.CustomResponse;
 import org.springframework.beans.factory.annotation.Autowired;
