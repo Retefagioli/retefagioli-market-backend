@@ -25,5 +25,3 @@ echo "[+] Deleting previous docker images..."
 docker image prune -f
 docker compose up --detach
 echo "[+] Application running on http://localhost:8080/ ..."
-docker compose ps --all
-docker port application-market 8080/tcp 
