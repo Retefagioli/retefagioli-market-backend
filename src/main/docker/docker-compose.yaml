@@ -4,8 +4,6 @@ networks:
   kong-net:
     external: true
 
-
-
 services:
   application:
     image: 'retefagioli-market-spring:latest'
@@ -83,5 +81,12 @@ services:
       - kong-database:kong-database
     depends_on:
       - kong-migration
+    networks:
+      - kong-net
+    
+  realtime-shopping:
+    image: 'realtime-shopping:latest'
+    build:
+      context: ../services/realtime-shopping/
     networks:
       - kong-net
