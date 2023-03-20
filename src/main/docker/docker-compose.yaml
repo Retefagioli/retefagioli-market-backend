@@ -88,5 +88,6 @@ services:
     image: 'realtime-shopping:latest'
     build:
       context: ../services/realtime-shopping/
+    container_name: realtime-shopping
     networks:
       - kong-net
