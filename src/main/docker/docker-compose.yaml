@@ -58,7 +58,9 @@ services:
       - kong-database
 
   kong:
-    image: kong:alpine
+    image: 'market-kong:latest'
+    build:
+      context: ../services/kong-gateway/
     container_name: kong-gateway
     environment:
       - KONG_DATABASE=postgres
