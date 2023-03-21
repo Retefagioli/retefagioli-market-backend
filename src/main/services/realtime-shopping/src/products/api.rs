@@ -10,7 +10,7 @@ pub async fn get_product(id: web::Path<String>) -> impl Responder {
 
 #[post("")]
 pub async fn add_product(product: web::Json<Product>) -> impl Responder {
-    let database = Database::get_client().await.unwrap().database(constant::PRODUCT_COLLECTION);
+    let database = Database::get_client().await.unwrap().database(constant::DATABASE_NAME);
     let collection = database.collection::<Product>("products");
     collection.insert_one(product.clone(), None).await;                                      
     "CIAO"

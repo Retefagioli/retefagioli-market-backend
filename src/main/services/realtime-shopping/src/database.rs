@@ -1,5 +1,5 @@
 pub mod constant {
-    pub const PRODUCT_COLLECTION: &str = "products";
+    pub const DATABASE_NAME: &str = "realtime-shopping";
     pub const MONGODB_CONNECTION: &str = "mongodb://127.0.0.1:27017/";
 }
 
