@@ -1,11 +1,10 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Default, Serialize, Deserialize)]
 pub struct Product {
     name: String,
     description: String,
-    
-} 
+}
 
 impl Product {
     pub fn new() -> Self {

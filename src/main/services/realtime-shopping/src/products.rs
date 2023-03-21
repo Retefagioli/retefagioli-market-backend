@@ -1,7 +1,7 @@
 mod api;
 mod models;
 
-use actix_web::{Scope, web};
+use actix_web::{web, Scope};
 
 pub fn get_products_apis() -> Scope {
     web::scope("/products")
@@ -9,4 +9,4 @@ pub fn get_products_apis() -> Scope {
         .service(api::update_product)
         .service(api::add_product)
         .service(api::delete_product)
-} 
+}
