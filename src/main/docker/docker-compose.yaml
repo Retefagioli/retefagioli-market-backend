@@ -3,6 +3,10 @@ version: '3.8'
 networks:
   kong-net:
     external: true
+  application-market-network:
+    driver: bridge
+  realtime-shopping-network:
+    driver: bridge
 
 services:
   application:
@@ -19,6 +23,8 @@ services:
       - SPRING_DATASOURCE_USERNAME=exsuslabs
       - SPRING_DATASOURCE_PASSWORD=exsuslabs
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - application-market-network
 
   database:
     image: 'retefagioli-market-database:latest'
@@ -30,6 +36,8 @@ services:
       - POSTGRES_PASSWORD=exsuslabs
     expose:
       - "5432"
+    networks:
+      - application-market-network
 
   kong-database:
     image: postgres:alpine
@@ -91,5 +99,27 @@ services:
     build:
       context: ../services/realtime-shopping/
     container_name: realtime-shopping
+    environment:
+      - MONGODB_CONFIG_PASSWORD=exsuslabs
+      - MONGODB_CONFIG_USERNAME=exsuslabs
+      - MONGODB_CONFIG_CONNECTION=mongodb://realtime-database:27017/
+    ports:
+      - "8080:8080"
     networks:
       - kong-net
+    depends_on:
+      - realtime-database
+    networks:
+      - realtime-shopping-network
+
+  realtime-database:
+    image: 'mongo:latest'
+    container_name: realtime-database 
+    restart: on-failure
+    expose:
+      - 27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=exsuslabs
+      - MONGO_INITDB_ROOT_PASSWORD=exsuslabs
+    networks:
+      - realtime-shopping-network
