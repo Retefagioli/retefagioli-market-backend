@@ -1,6 +1,8 @@
 pub mod database;
 pub mod enviroment;
 pub mod products;
+pub mod service;
+pub mod error;
 
 use actix_web::{App, HttpServer};
 
