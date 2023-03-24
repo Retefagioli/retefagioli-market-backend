@@ -19,9 +19,6 @@ impl Database {
             .password(Env::get_mongodb_password())
             .build();
         client_options.credential = Some(credentials);
-        Some(
-            Client::with_options(client_options)
-                .unwrap(),
-        )
+        Some(Client::with_options(client_options).unwrap())
     }
 }
