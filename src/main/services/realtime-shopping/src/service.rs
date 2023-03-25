@@ -1,7 +1,9 @@
+use std::error::Error;
+
 use crate::database::{constant, Database};
-use mongodb::{Collection, bson::Document, error::Error};
-use serde::{Serialize, de::DeserializeOwned};
 use futures::stream::TryStreamExt;
+use mongodb::{bson::Document, error::Error, Collection};
+use serde::{de::DeserializeOwned, Serialize};
 
 pub struct CruderService<T> {
     db: Collection<T>,
@@ -21,46 +23,44 @@ where
         }
     }
 
-    pub async fn save_one(&self, element: T) -> Result<&str, ()> {
+    pub async fn save_one(&self, element: T) -> Result<(), String> {
         match self.db.insert_one(element, None).await {
-            Ok(_) => { 
-                Ok("Should be fucking inserted")
-            },
-            Err(_) => { 
-                 println!("Error inserting the fucking element");
-                 Err(())
-            }
+            Ok(_) => Ok(()),
+            Err(e) => Err(e.source().unwrap().to_string()),
         }
     }
 
-    pub async fn find_one(&self, query: Document) -> Result<Option<T>, ()> {
+    pub async fn find_one(&self, query: Document) -> Result<Option<T>, String> {
         match self.db.find_one(query, None).await {
             Ok(Some(T)) => Ok(Some(T)),
             Ok(None) => Ok(None),
-            Err(_) => Err(())
+            Err(e) => Err(e.source().unwrap().to_string()),
         }
     }
 
-    pub async fn find(&self, query: Document) -> Result<Option<Vec<T>>, ()> {
+    pub async fn find(&self, query: Document) -> Result<Option<Vec<T>>, String> {
         let cursor = self.db.find(query, None).await.unwrap();
         Ok(Some(cursor.try_collect().await.unwrap()))
     }
 
-    pub async fn delete_one(&self, query: Document) -> Result<(), ()> {
+    pub async fn delete_one(&self, query: Document) -> Result<(), String> {
         match self.db.delete_one(query, None).await {
             Ok(_) => Ok(()),
-            Err(_) => Err(())
-
+            Err(e) => Err(e.source().unwrap().to_string()),
         }
     }
 
-    pub async fn update_one(&self, query: Document, update_info: Document) -> Result<(), ()> {
-        self.db.update_one(query, update_info, None).await;
-        Ok(())
+    pub async fn update_one(&self, query: Document, update_info: Document) -> Result<(), String> {
+        match self.db.update_one(query, update_info, None).await {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e.source().unwrap().to_string()),
+        }
     }
 
-    pub async fn update_many(&self, query: Document, update_info: Document) -> Result<(), ()> {
-        self.db.update_many(query, update_info, None).await;
-        Ok(())
+    pub async fn update_many(&self, query: Document, update_info: Document) -> Result<(), String> {
+        match self.db.update_many(query, update_info, None).await {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e.source().unwrap().to_string()),
+        }
     }
 }
