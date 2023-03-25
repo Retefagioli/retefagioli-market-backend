@@ -1,32 +1,28 @@
 use serde::{Deserialize, Serialize};
+use mongodb::bson::{doc, Document};
 
 #[derive(Clone, Debug, Default, Serialize, Deserialize)]
 pub struct Product {
+    barcode: String,
     name: String,
     description: String,
+    quantity: i64,
+    category: String,
+    image: String,
 }
 
+
 impl Product {
-    pub fn new() -> Self {
-        Product {
-            name: String::new(),
-            description: String::new(),
-        }
-    }
-
-    pub fn name(&self) -> &str {
-        &self.name
-    }
-
-    pub fn set_name(&mut self, x: String) {
-        self.name = x;
-    }
-
-    pub fn description(&self) -> &str {
-        &self.description
-    }
-
-    pub fn set_description(&mut self, x: String) {
-        self.description = x;
+    pub fn get_doc(&self) -> Document {
+       doc! {
+            "$set": {
+                "barcode": &self.barcode,
+                "name": &self.name,
+                "description": &self.description,
+                "quantity": self.quantity,
+                "category": &self.category,
+                "image": &self.image,
+            }
+       } 
     }
 }
