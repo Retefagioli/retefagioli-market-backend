@@ -33,8 +33,12 @@ where
         }
     }
 
-    pub async fn find_one(&self, query: Document) -> Result<Option<T>, Error> {
-        self.db.find_one(query, None).await
+    pub async fn find_one(&self, query: Document) -> Result<Option<T>, ()> {
+        match self.db.find_one(query, None).await {
+            Ok(Some(T)) => Ok(Some(T)),
+            Ok(None) => Ok(None),
+            Err(_) => Err(())
+        }
     }
 
     pub async fn find(&self, query: Document) -> Result<Option<Vec<T>>, ()> {
@@ -52,6 +56,11 @@ where
 
     pub async fn update_one(&self, query: Document, update_info: Document) -> Result<(), ()> {
         self.db.update_one(query, update_info, None).await;
+        Ok(())
+    }
+
+    pub async fn update_many(&self, query: Document, update_info: Document) -> Result<(), ()> {
+        self.db.update_many(query, update_info, None).await;
         Ok(())
     }
 }
