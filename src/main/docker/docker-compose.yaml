@@ -99,6 +99,7 @@ services:
     build:
       context: ../services/realtime-shopping/
     container_name: realtime-shopping
+    restart: always
     environment:
       - MONGODB_CONFIG_PASSWORD=exsuslabs
       - MONGODB_CONFIG_USERNAME=exsuslabs
