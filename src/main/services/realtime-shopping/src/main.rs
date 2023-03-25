@@ -1,6 +1,5 @@
 pub mod database;
 pub mod enviroment;
-pub mod error;
 pub mod products;
 pub mod service;
 
