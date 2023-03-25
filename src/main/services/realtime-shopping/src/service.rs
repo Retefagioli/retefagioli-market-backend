@@ -21,7 +21,7 @@ where
         }
     }
 
-    pub async fn save(&self, element: T) -> Result<&str, ()> {
+    pub async fn save_one(&self, element: T) -> Result<&str, ()> {
         match self.db.insert_one(element, None).await {
             Ok(_) => { 
                 Ok("Should be fucking inserted")
@@ -42,4 +42,16 @@ where
         Ok(Some(cursor.try_collect().await.unwrap()))
     }
 
+    pub async fn delete_one(&self, query: Document) -> Result<(), ()> {
+        match self.db.delete_one(query, None).await {
+            Ok(_) => Ok(()),
+            Err(_) => Err(())
+
+        }
+    }
+
+    pub async fn update_one(&self, query: Document, update_info: Document) -> Result<(), ()> {
+        self.db.update_one(query, update_info, None).await;
+        Ok(())
+    }
 }
