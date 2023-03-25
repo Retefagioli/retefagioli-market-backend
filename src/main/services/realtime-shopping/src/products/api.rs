@@ -1,22 +1,22 @@
+use crate::database::constant;
 use crate::products::models::Product;
 use crate::service::CruderService;
-use crate::{database::constant, service};
-use actix_web::{delete, get, post, put, web, Responder, HttpResponse};
+use actix_web::{delete, get, post, put, web, HttpResponse, Responder};
 use mongodb::bson::doc;
 
-#[get("/{name}")]
-pub async fn get_product(name: web::Path<String>) -> impl Responder {
+#[get("/{barcode}")]
+pub async fn get_product(barcode: web::Path<String>) -> impl Responder {
     if let Some(service) = CruderService::<Product>::new(constant::PRODUCTS_COLLECTION).await {
         let filter = doc! {
-            "name": name.to_string(),
+            "barcode": barcode.to_string(),
         };
         match service.find_one(filter).await {
-            Ok(Some(product)) => web::Json(product),
-            Ok(None) => web::Json(Product::new()),
-            Err(_) => web::Json(Product::new()),
+            Ok(Some(product)) => HttpResponse::Found().json(product),
+            Ok(None) => HttpResponse::NotFound().finish(),
+            Err(message) => HttpResponse::InternalServerError().body(message),
         }
     } else {
-        web::Json(Product::new())
+        HttpResponse::InternalServerError().body("internal server error")
     }
 }
 
@@ -24,20 +24,53 @@ pub async fn get_product(name: web::Path<String>) -> impl Responder {
 pub async fn add_product(product: web::Json<Product>) -> impl Responder {
     if let Some(service) = CruderService::<Product>::new(constant::PRODUCTS_COLLECTION).await {
         match service.save_one(product.clone()).await {
-            Ok(result) => result.to_owned(),
-            Err(_) => "Non worka".to_string(),
+            Ok(()) => HttpResponse::Created().finish(),
+            Err(message) => HttpResponse::InternalServerError().body(message),
         }
     } else {
-        "Doesn't work".to_string()
+        HttpResponse::InternalServerError().body("internal server error")
     }
 }
 
-#[delete("/{id}")]
-pub async fn delete_product() -> impl Responder {
-    "ciao"
+#[delete("/{barcode}")]
+pub async fn delete_product(barcode: web::Path<String>) -> impl Responder {
+    if let Some(service) = CruderService::<Product>::new(constant::PRODUCTS_COLLECTION).await {
+        let filter = doc! {
+            "barcode": barcode.to_string(),
+        };
+        match service.find_one(filter.clone()).await {
+            Ok(Some(_)) => match service.delete_one(filter).await {
+                Ok(()) => HttpResponse::NoContent().finish(),
+                Err(message) => HttpResponse::InternalServerError().body(message),
+            },
+            Ok(None) => HttpResponse::NotFound().finish(),
+            Err(message) => HttpResponse::InternalServerError().body(message),
+        }
+    } else {
+        HttpResponse::InternalServerError().body("internal server error")
+    }
 }
 
-#[put("")]
-pub async fn update_product() -> impl Responder {
-    "ciao"
+#[put("/{barcode}")]
+pub async fn update_product(
+    product: web::Json<Product>,
+    barcode: web::Path<String>,
+) -> impl Responder {
+    if let Some(service) = CruderService::<Product>::new(constant::PRODUCTS_COLLECTION).await {
+        let query = doc! {
+            "barcode": barcode.to_string(),
+        };
+        match service.find_one(query.clone()).await {
+            Ok(Some(_)) => {
+                match service.update_one(query, product.get_doc()).await {
+                    Ok(()) => HttpResponse::Ok().finish(),
+                    Err(message) => HttpResponse::InternalServerError().body(message),
+                }
+            }
+            Ok(None) => HttpResponse::NotFound().finish(),
+            Err(message) => HttpResponse::InternalServerError().body(message),
+        }
+    } else {
+        HttpResponse::InternalServerError().body("internal server error")
+    }
 }

@@ -1,9 +1,8 @@
-use std::error::Error;
-
 use crate::database::{constant, Database};
 use futures::stream::TryStreamExt;
-use mongodb::{bson::Document, error::Error, Collection};
+use mongodb::{bson::Document, Collection};
 use serde::{de::DeserializeOwned, Serialize};
+use std::error::Error;
 
 pub struct CruderService<T> {
     db: Collection<T>,
@@ -32,7 +31,7 @@ where
 
     pub async fn find_one(&self, query: Document) -> Result<Option<T>, String> {
         match self.db.find_one(query, None).await {
-            Ok(Some(T)) => Ok(Some(T)),
+            Ok(Some(element)) => Ok(Some(element)),
             Ok(None) => Ok(None),
             Err(e) => Err(e.source().unwrap().to_string()),
         }
