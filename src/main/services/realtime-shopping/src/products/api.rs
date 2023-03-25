@@ -1,7 +1,7 @@
 use crate::products::models::Product;
 use crate::service::CruderService;
 use crate::{database::constant, service};
-use actix_web::{delete, get, post, put, web, Responder};
+use actix_web::{delete, get, post, put, web, Responder, HttpResponse};
 use mongodb::bson::doc;
 
 #[get("/{name}")]
