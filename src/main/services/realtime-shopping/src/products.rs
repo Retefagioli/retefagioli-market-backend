@@ -1,5 +1,5 @@
 mod api;
-mod models;
+pub mod models;
 
 use actix_web::{web, Scope};
 

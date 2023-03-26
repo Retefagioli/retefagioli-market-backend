@@ -2,6 +2,7 @@ pub mod database;
 pub mod enviroment;
 pub mod products;
 pub mod service;
+pub mod shoppingcart;
 
 use actix_web::{App, HttpServer};
 
