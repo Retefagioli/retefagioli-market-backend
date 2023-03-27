@@ -32,7 +32,6 @@ public class UserController {
         if (user.isEmpty()) {
             return CustomResponse
                     .create()
-                    .message("bruh")
                     .status(HttpStatus.NOT_FOUND)
                     .build();
         }
@@ -100,8 +99,7 @@ public class UserController {
 
         return CustomResponse
                 .create()
-                .message("user deleted successfully")
-                .status(HttpStatus.OK)
+                .status(HttpStatus.NO_CONTENT)
                 .build();
     }
 
