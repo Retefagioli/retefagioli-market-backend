@@ -1,6 +1,7 @@
 pub mod constant {
     pub const DATABASE_NAME: &str = "realtime-shopping";
     pub const PRODUCTS_COLLECTION: &str = "products";
+    pub const SHOPPINGCART_COLLECTION: &str = "shoppingcarts";
 }
 
 use crate::enviroment::Env;
