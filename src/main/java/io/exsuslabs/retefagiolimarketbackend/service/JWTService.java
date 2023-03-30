@@ -7,5 +7,4 @@ import java.util.Optional;
 
 public interface JWTService {
     Optional<String> createJWT(UserModel userModel);
-    Optional<DecodedJWT> verifyJWT(String token);
 }
