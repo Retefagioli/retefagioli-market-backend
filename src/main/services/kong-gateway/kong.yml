@@ -1,0 +1,25 @@
+_format_version: "3.0"
+_transform: true
+
+services:
+- name: user
+  url: http://retefagioli-market:60000
+  routes:
+  - name: market
+    paths:
+    - /market
+
+- name: realtime-shopping
+  url: http://172.19.0.1:8080
+  routes:
+  - name: shopping
+    paths:
+      - /shopping
+
+- name: mocker
+  url: https://www.mocky.io/v2/5ca725833400002c4876b363
+  routes:
+  - name: mocky
+    paths:
+      - /mocky
+
