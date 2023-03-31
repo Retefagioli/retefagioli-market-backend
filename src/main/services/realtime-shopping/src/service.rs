@@ -37,9 +37,25 @@ where
         }
     }
 
-    pub async fn find(&self, query: Document) -> Result<Option<Vec<T>>, String> {
+    pub async fn find_many(&self, query: Document) -> Result<Option<Vec<T>>, String> {
         let cursor = self.db.find(query, None).await.unwrap();
         Ok(Some(cursor.try_collect().await.unwrap()))
+    }
+
+    pub async fn find_one_and_update(&self, query: Document, update_info: Document) -> Result<Option<T>, String> {
+        match self.db.find_one_and_update(query, update_info, None).await  {
+            Ok(Some(element)) => Ok(Some(element)),
+            Ok(None) => Ok(None),
+            Err(e) => Err(e.source().unwrap().to_string())
+        }
+    }
+
+    pub async fn find_one_and_delete(&self, query: Document ) -> Result<Option<T>, String> {
+        match self.db.find_one_and_delete(query, None).await {
+            Ok(Some(element)) => Ok(Some(element)),
+            Ok(None) => Ok(None),
+            Err(e) => Err(e.source().unwrap().to_string())
+        }
     }
 
     pub async fn delete_one(&self, query: Document) -> Result<(), String> {
@@ -62,4 +78,5 @@ where
             Err(e) => Err(e.source().unwrap().to_string()),
         }
     }
+
 }
