@@ -1,5 +1,5 @@
-use serde::{Deserialize, Serialize};
 use mongodb::bson::{doc, Document};
+use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Debug, Default, Serialize, Deserialize)]
 pub struct Product {
@@ -11,18 +11,17 @@ pub struct Product {
     image: String,
 }
 
-
 impl Product {
     pub fn get_doc(&self) -> Document {
-       doc! {
-            "$set": {
-                "barcode": &self.barcode,
-                "name": &self.name,
-                "description": &self.description,
-                "quantity": self.quantity,
-                "category": &self.category,
-                "image": &self.image,
-            }
-       } 
+        doc! {
+             "$set": {
+                 "barcode": &self.barcode,
+                 "name": &self.name,
+                 "description": &self.description,
+                 "quantity": self.quantity,
+                 "category": &self.category,
+                 "image": &self.image,
+             }
+        }
     }
 }

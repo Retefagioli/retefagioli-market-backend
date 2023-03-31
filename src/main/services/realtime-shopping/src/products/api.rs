@@ -61,12 +61,10 @@ pub async fn update_product(
             "barcode": barcode.to_string(),
         };
         match service.find_one(query.clone()).await {
-            Ok(Some(_)) => {
-                match service.update_one(query, product.get_doc()).await {
-                    Ok(()) => HttpResponse::Ok().finish(),
-                    Err(message) => HttpResponse::InternalServerError().body(message),
-                }
-            }
+            Ok(Some(_)) => match service.update_one(query, product.get_doc()).await {
+                Ok(()) => HttpResponse::Ok().finish(),
+                Err(message) => HttpResponse::InternalServerError().body(message),
+            },
             Ok(None) => HttpResponse::NotFound().finish(),
             Err(message) => HttpResponse::InternalServerError().body(message),
         }
