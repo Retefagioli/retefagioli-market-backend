@@ -10,10 +10,8 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
-
+  check:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
       - name: Install latest nightly
@@ -22,23 +20,55 @@ jobs:
             toolchain: nightly
             override: true
             components: rustfmt, clippy
-            
+      - uses: Swatinem/rust-cache@v2
       - name: Run cargo check
         working-directory: ./services/realtime-shopping/
         run: cargo check
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install latest nightly
+      uses: actions-rs/toolchain@v1
+      with:
+          toolchain: nightly
+          override: true
+          components: rustfmt, clippy
+    - uses: Swatinem/rust-cache@v2
+    - name: Build Realtime-shopping
+      working-directory: ./services/realtime-shopping/
+      run: cargo build
+  
+  linting:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install latest nightly
+      uses: actions-rs/toolchain@v1
+      with:
+          toolchain: nightly
+          override: true
+          components: rustfmt, clippy
+    - uses: Swatinem/rust-cache@v2
+    - name: Check with cargo fmt
+      working-directory: ./services/realtime-shopping/
+      run: cargo fmt --all -- --check
+    - name: Check with clippy
+      working-directory: ./services/realtime-shopping/
+      run: cargo clippy --all-targets --all-features -- -D warnings
       
-      - uses: Swatinem/rust-cache@v2
-      - name: Build Realtime-shopping
-        working-directory: ./services/realtime-shopping/
-        run: cargo build
       
-      - name: Check with cargo fmt
-        working-directory: ./services/realtime-shopping/
-        run: cargo fmt --all -- --check
-      
-      - name: Check with clippy
-        working-directory: ./services/realtime-shopping/
-        run: cargo clippy --all-targets --all-features -- -D warnings
-      
-      - name: Run unit tests
-        run: cargo test -v --tests
+  testing:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install latest nightly
+      uses: actions-rs/toolchain@v1
+      with:
+          toolchain: nightly
+          override: true
+          components: rustfmt, clippy
+    - uses: Swatinem/rust-cache@v2
+    - name: Run unit tests
+      working-directory: ./services/realtime-shopping/
+      run: cargo test -v --tests
