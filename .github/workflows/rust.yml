@@ -21,14 +21,14 @@ jobs:
             override: true
             components: rustfmt, clippy
             
+      - name: Run cargo check
+        working-directory: ./services/realtime-shopping/
+        run: cargo check
+      
+      - uses: Swatinem/rust-cache@v2
       - name: Build Realtime-shopping
         working-directory: ./services/realtime-shopping/
         run: cargo build
-      
-      - name: Run cargo check
-        uses: actions-rs/cargo@v1
-        with:
-          command: check
       
       - name: Check with cargo fmt
         working-directory: ./services/realtime-shopping/
