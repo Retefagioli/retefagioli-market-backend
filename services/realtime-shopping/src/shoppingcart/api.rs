@@ -130,9 +130,7 @@ pub async fn update_product_in_cart(
 }
 
 #[delete("/{cart_id}/{product_id}")]
-pub async fn delete_product_from_cart(
-    path_params: web::Path<(String, String)>,
-) -> impl Responder {
+pub async fn delete_product_from_cart(path_params: web::Path<(String, String)>) -> impl Responder {
     if let Some(service) =
         CruderService::<ShoppingCart>::new(constant::SHOPPINGCART_COLLECTION).await
     {

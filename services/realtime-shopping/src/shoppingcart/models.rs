@@ -1,6 +1,6 @@
+use chrono;
 use mongodb::bson::oid::ObjectId;
 use serde::{Deserialize, Serialize};
-use chrono;
 
 #[derive(Serialize, Deserialize)]
 pub enum CartState {
@@ -27,7 +27,7 @@ impl ShoppingCart {
             products: Vec::new(),
             state: CartState::Open,
             timestamp: chrono::offset::Utc::now().timestamp(),
-         }
+        }
     }
 
     pub fn get_id(&self) -> String {
