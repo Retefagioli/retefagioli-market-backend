@@ -21,6 +21,8 @@ jobs:
             override: true
             components: rustfmt, clippy
       - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: "services/realtime-shopping/"
       - name: Run cargo check
         working-directory: ./services/realtime-shopping/
         run: cargo check
@@ -35,6 +37,8 @@ jobs:
           override: true
           components: rustfmt, clippy
     - uses: Swatinem/rust-cache@v2
+      with:
+          workspaces: "services/realtime-shopping/"
     - name: Build Realtime-shopping
       working-directory: ./services/realtime-shopping/
       run: cargo build
@@ -50,6 +54,8 @@ jobs:
           override: true
           components: rustfmt, clippy
     - uses: Swatinem/rust-cache@v2
+      with:
+          workspaces: "services/realtime-shopping/"
     - name: Check with cargo fmt
       working-directory: ./services/realtime-shopping/
       run: cargo fmt --all -- --check
@@ -69,6 +75,8 @@ jobs:
           override: true
           components: rustfmt, clippy
     - uses: Swatinem/rust-cache@v2
+      with:
+          workspaces: "services/realtime-shopping/"
     - name: Run unit tests
       working-directory: ./services/realtime-shopping/
       run: cargo test -v --tests
