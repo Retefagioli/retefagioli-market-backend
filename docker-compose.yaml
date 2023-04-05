@@ -12,7 +12,7 @@ services:
   application:
     image: 'retefagioli-market-spring:latest'
     build:
-      context: .
+      context: ./services/retefagioli-market-backend/src/main/docker/
     container_name: application-market
     depends_on:
       - database
@@ -30,7 +30,7 @@ services:
   database:
     image: 'retefagioli-market-database:latest'
     build:
-      context: postgres/.
+      context: ./services/retefagioli-market-backend/src/main/docker/postgres/
     container_name: database-market
     environment:
       - POSTGRES_USER=exsuslabs
@@ -43,8 +43,8 @@ services:
   kong:
     image: 'market-kong:latest'
     build:
-      context: ../services/kong-gateway/
-    container_name: kong-gateway
+      context: ./services/kong-gateway/
+    container_name: market-kong
     environment:
       - KONG_DATABASE=off
       - KONG_PROXY_ACCESS_LOG=/dev/stdout
@@ -70,7 +70,7 @@ services:
   realtime-shopping:
     image: 'realtime-shopping:latest'
     build:
-      context: ../services/realtime-shopping/
+      context: ./services/realtime-shopping/
     container_name: realtime-shopping
     restart: always
     environment:

@@ -8,7 +8,7 @@ pub struct Product {
     description: String,
     quantity: i64,
     category: String,
-    image: String,
+    image_url: String,
 }
 
 impl Product {
@@ -20,7 +20,7 @@ impl Product {
                  "description": &self.description,
                  "quantity": self.quantity,
                  "category": &self.category,
-                 "image": &self.image,
+                 "image_url": &self.image_url,
              }
         }
     }
