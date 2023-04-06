@@ -5,12 +5,11 @@ import io.exsuslabs.retefagiolimarketbackend.repository.UserRepository;
 import io.exsuslabs.retefagiolimarketbackend.request.UserFullInfoRequest;
 import io.exsuslabs.retefagiolimarketbackend.service.UserService;
 import io.exsuslabs.retefagiolimarketbackend.util.RequestConverter;
+import java.util.Optional;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {

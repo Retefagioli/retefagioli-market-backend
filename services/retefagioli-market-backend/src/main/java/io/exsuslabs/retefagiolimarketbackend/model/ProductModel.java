@@ -1,12 +1,11 @@
 package io.exsuslabs.retefagiolimarketbackend.model;
 
-import javax.swing.ImageIcon;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
+import javax.swing.ImageIcon;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 
 @NoArgsConstructor
 @Getter

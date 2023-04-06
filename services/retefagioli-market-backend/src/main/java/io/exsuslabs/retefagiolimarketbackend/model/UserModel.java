@@ -1,13 +1,11 @@
 package io.exsuslabs.retefagiolimarketbackend.model;
 
-import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
+import java.util.Date;
+import java.util.UUID;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Date;
-import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
@@ -15,7 +13,6 @@ import java.util.UUID;
 @Setter
 @Table(name = "User", schema = "public")
 public class UserModel {
-
     @Id
     UUID id;
 

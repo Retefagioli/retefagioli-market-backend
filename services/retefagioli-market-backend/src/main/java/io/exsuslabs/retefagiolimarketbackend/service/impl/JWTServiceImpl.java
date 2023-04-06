@@ -8,7 +8,6 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import io.exsuslabs.retefagiolimarketbackend.model.UserModel;
 import io.exsuslabs.retefagiolimarketbackend.service.JWTService;
-
 import java.time.Instant;
 import java.util.Optional;
 

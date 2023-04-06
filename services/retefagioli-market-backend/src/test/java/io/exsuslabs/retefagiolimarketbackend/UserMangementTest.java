@@ -1,11 +1,14 @@
 package io.exsuslabs.retefagiolimarketbackend;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+
 import com.google.gson.Gson;
 import io.exsuslabs.retefagiolimarketbackend.controller.UserController;
-import io.exsuslabs.retefagiolimarketbackend.model.UserModel;
-import io.exsuslabs.retefagiolimarketbackend.repository.UserRepository;
 import io.exsuslabs.retefagiolimarketbackend.request.UserFullInfoRequest;
 import io.exsuslabs.retefagiolimarketbackend.service.UserService;
+import java.nio.charset.Charset;
+import java.util.Optional;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +20,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
-import java.nio.charset.Charset;
-import java.util.Optional;
-import java.util.UUID;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @SpringBootTest(classes = {
         TestConfiguration.class,

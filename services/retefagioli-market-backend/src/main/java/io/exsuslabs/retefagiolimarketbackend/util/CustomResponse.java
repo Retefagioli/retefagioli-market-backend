@@ -1,13 +1,12 @@
 package io.exsuslabs.retefagiolimarketbackend.util;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class CustomResponse {
-    private Map<Object, Object> result = new HashMap<>();
+    private final Map<Object, Object> result = new HashMap<>();
     private HttpStatus status;
 
     public static CustomResponse create() {

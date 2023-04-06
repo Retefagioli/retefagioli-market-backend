@@ -2,7 +2,6 @@ package io.exsuslabs.retefagiolimarketbackend.service;
 
 import io.exsuslabs.retefagiolimarketbackend.model.UserModel;
 import io.exsuslabs.retefagiolimarketbackend.request.UserFullInfoRequest;
-
 import java.util.Optional;
 import java.util.UUID;
 
