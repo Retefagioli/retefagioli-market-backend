@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Java CI with Maven
+name: Application-market validation
 
 on:
   push:
@@ -46,12 +46,12 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Lint code base
-      uses: github/super-linter@v4
-      env:
-        VALIDATE_ALL_CODEBASE: true
-        DEFAULT_WORKSPACE: ./services/retefagioli-market-backend/
-        DEFAULT_BRANCH: master
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - uses: dbelyaev/action-checkstyle@v0.7.4
+      with:
+        github_token: ${{ secrets.github_token }}
+        reporter: github-pr-review
+        workir: ./services/application-market-backend/
+        level: warning
   
   testing:
     runs-on: ubuntu-latest
