@@ -46,12 +46,8 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Lint code base
-      uses: dbelyaev/action-checkstyle@v0.7.4
-      with:
-        github_token: ${{ secrets.github_token }}
-        reporter: github-pr-review
-        workdir: ./services/application-market-backend/
-        level: warning
+      working-directory: ./services/retefagioli-market-backend/
+      run: mvn checkstyle:check
   
   testing:
     runs-on: ubuntu-latest
